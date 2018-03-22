@@ -3,6 +3,8 @@ package main;
 import model.DataModel;
 import gui.MainFrame;
 
+import java.io.IOException;
+
 /**
  * Created by DSzustkowski on 27.03.18.
  */
@@ -17,6 +19,13 @@ public class Main
     {
         dataModel = new DataModel();
         mf = new MainFrame();
+        try
+        {
+            mf.initGUI();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
