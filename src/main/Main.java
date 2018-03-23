@@ -19,13 +19,7 @@ public class Main
     {
         dataModel = new DataModel();
         mf = new MainFrame();
-        try
-        {
-            mf.initGUI();
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        mf.initGUI();
 
     }
 

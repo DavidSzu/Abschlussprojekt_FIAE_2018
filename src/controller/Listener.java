@@ -17,6 +17,7 @@ public class Listener implements ActionListener
 {
     private DataModel dataModel = Main.getDataModel();
     private MainFrame mainFrame = Main.getMf();
+    private FileHandler fileHandler = new FileHandler();
 
     public void actionPerformed(ActionEvent e)
     {
@@ -24,29 +25,25 @@ public class Listener implements ActionListener
 
         if (source == mainFrame.getBtnChooseDirCPR())
         {
-            chooseDirectoryCPR();
+            chooseDirectory("cpr");
         }
 
         if (source == mainFrame.getBtnChooseDirDLL())
         {
-            chooseDirectoryDLL();
+            chooseDirectory("dll");
         }
-
     }
 
-    private void chooseDirectoryCPR()
+    private void chooseDirectory(String extension)
     {
-        FileHandler fileHandler = new FileHandler();
-        Path directoryName = fileHandler.chooseDirectory();
-        fileHandler.listCPRFiles(directoryName.toString());
-        mainFrame.addFileListCPR(dataModel.getFileListCPR());
+        Path directoryName = mainFrame.chooseDirectory();
+        fileHandler.listFiles(directoryName.toString(), extension);
+        if (extension == "cpr")
+        {
+            mainFrame.addFileList(dataModel.getFileListCPR());
+        }
+        else
+            mainFrame.addFileList(dataModel.getFileListDLL());
     }
 
-    private void chooseDirectoryDLL()
-    {
-        FileHandler fileHandler = new FileHandler();
-        Path directoryName = fileHandler.chooseDirectory();
-        fileHandler.listDLLFiles(directoryName.toString());
-        mainFrame.addFileListDLL(dataModel.getFileListCPR());
-    }
 }

@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 /**
  * Created by DSzustkowski on 27.03.18.
  */
-public class ExtensionFileFilter implements FilenameFilter
+public class FileExtensionFilter implements FilenameFilter
 {
     private final Set<String> extensions;
     private final String description;
 
-    public ExtensionFileFilter(String description, String... extensions)
+    public FileExtensionFilter(String description, String... extensions)
     {
         this.description = description;
         this.extensions = extensions == null?

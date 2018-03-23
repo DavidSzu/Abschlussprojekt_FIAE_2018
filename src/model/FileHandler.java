@@ -16,52 +16,32 @@ import java.util.ArrayList;
 public class FileHandler
 {
 
-    MainFrame mf = Main.getMf();
-    DataModel dataModel = Main.getDataModel();
-    FileFilter filter = new FileNameExtensionFilter("Cubase or PlugIn Files", "cpr", "dll");
+    private MainFrame mf = Main.getMf();
+    private DataModel dataModel = Main.getDataModel();
 
+    private File directory;
+    private File[] fList;
+    private ArrayList<File> filesListed;
 
-    public Path chooseDirectory()
-    {
-        Path path = null;
-        JFileChooser chooser = new JFileChooser();
-        chooser.setFileFilter(filter);
-        chooser.setAcceptAllFileFilterUsed(false);
-        chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        chooser.showOpenDialog(mf);
-        System.out.println("current Directory:" + chooser.getCurrentDirectory());
-
-        if (chooser.getCurrentDirectory().isDirectory())
-        {
-            path = Paths.get(chooser.getCurrentDirectory().getAbsolutePath());
-            return path;
-        } else if (chooser.getCurrentDirectory().isFile())
-        {
-            path = Paths.get(chooser.getSelectedFile().getPath());
-            return path;
-        }
-        return path;
-    }
 
 // -----------------------------------------------------------------------------
-    public void listCPRFiles(String directoryName)
+    public void listFiles(String directoryName, String extension)
     {
-        File directory = new File (directoryName);
-        File[] fList = directory.listFiles(new ExtensionFileFilter ("Cubase Files ", "cpr")
+        directory = new File (directoryName);
+        fList = directory.listFiles(new FileExtensionFilter("Cubase Files ", extension)
         {
             @Override
             public boolean accept(File dir, String name)
             {
-                if (name.toLowerCase().endsWith("cpr"))
+                if (name.toLowerCase().endsWith(extension))
                 {
-                    return name.toLowerCase().endsWith("cpr");
+                    return name.toLowerCase().endsWith(extension);
                 }
                 else return false;
             }
         });
 
-        ArrayList<File> filesListed = dataModel.getFileListCPR();
-
+        filesListed = new ArrayList();
         for (File file : fList)
         {
             if (file.isFile())
@@ -70,42 +50,42 @@ public class FileHandler
             }
             else if (file.isDirectory())
             {
-                listCPRFiles(file.getAbsolutePath());
+                listFiles(file.getAbsolutePath(), extension);
             }
         }
+
+        if (extension == "cpr")
+        {
+            dataModel.setFileListCPR(filesListed);
+        }
+        else
+            dataModel.setFileListDLL(filesListed);
+
+
         System.out.println(dataModel.getFileListCPR() + "dataModel.getFileListCPR");
     }
 
-    // -----------------------------------------------------------------------------
-    public void listDLLFiles(String directoryName)
+// -----------------------------------------------------------------------------
+    public void walkCPR(String directoryName)
     {
-        File directory = new File (directoryName);
-        File[] fList = directory.listFiles(new ExtensionFileFilter ("PlugIn Files",  "dll")
-        {
-            @Override
-            public boolean accept(File dir, String name)
-            {
-                if (name.toLowerCase().endsWith("dll"))
-                {
-                    return name.toLowerCase().endsWith("dll");
-                }
-                else return false;
-            }
-        });
+        directory = new File(directoryName);
+        fList = directory.listFiles(new FileExtensionFilter("Cubase Files ", "cpr"));
 
-        ArrayList<File> filesListed = dataModel.getFileListDLL();
+        if (fList == null) return;
 
+        ArrayList<File> filesListed = dataModel.getFileListCPR();
         for (File file : fList)
         {
-            if (file.isFile())
+            if (file.isDirectory())
+            {
+                walkCPR(file.getAbsolutePath());
+                System.out.println("Dir:" + file.getAbsoluteFile());
+            }
+            else
             {
                 filesListed.add(file);
-            }
-            else if (file.isDirectory())
-            {
-                listCPRFiles(file.getAbsolutePath());
+                System.out.println("File:" + file.getAbsoluteFile());
             }
         }
-        System.out.println(dataModel.getFileListDLL() + "dataModel.getFileListDLL");
     }
 }

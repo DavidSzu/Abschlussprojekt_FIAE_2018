@@ -2,12 +2,20 @@ package gui;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import controller.Listener;
+
+/**
+ * Created by DSzustkowski on 27.03.18.
+ */
 
 public class MainFrame extends JFrame
 {
@@ -17,10 +25,13 @@ public class MainFrame extends JFrame
     private JButton btnChooseDirDLL;
     private JPanel panelCubase;
     private JPanel panelPlugIns;
-    private JList<File> listCPR;
-    private JList<File> listDLL;
+    private JList fileList;
+    private FileFilter filter = new FileNameExtensionFilter("Cubase or PlugIn Files", "cpr", "dll");
+    private Path path;
+    private JFileChooser chooser;
 
-    public void initGUI() throws IOException
+
+    public void initGUI()
     {
         setBackground(Color.DARK_GRAY);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,29 +67,45 @@ public class MainFrame extends JFrame
         btnChooseDirDLL.addActionListener(listener);
         panelPlugIns.add(btnChooseDirDLL);
 
-
         setVisible(true);
     }
 
-    public void addFileListCPR (ArrayList<File> filesListed)
+// -----------------------------------------------------------------------------
+    public void addFileList(ArrayList<File> filesListed)
     {
-        listCPR = new JList(filesListed.toArray());
-        listCPR.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scrollPane = new JScrollPane(listCPR);
+        fileList = new JList(filesListed.toArray());
+        fileList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scrollPane = new JScrollPane(fileList);
         scrollPane.setBounds(0, 0, 564, 439);
         panelCubase.add(scrollPane);
-        scrollPane.setViewportView(listCPR);
+        scrollPane.setViewportView(fileList);
     }
 
-    public void addFileListDLL(ArrayList<File> filesListed)
+// -----------------------------------------------------------------------------
+    public Path chooseDirectory()
     {
-        listDLL = new JList(filesListed.toArray());
-        listDLL.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scrollPane = new JScrollPane(listDLL);
-        scrollPane.setBounds(0, 0, 564, 439);
-        panelPlugIns.add(scrollPane);
-        scrollPane.setViewportView(listDLL);
+        path = null;
+        chooser = new JFileChooser();
+        chooser.setFileFilter(filter);
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        chooser.showOpenDialog(this);
+        System.out.println("current Directory:" + chooser.getCurrentDirectory());
+
+        if (chooser.getCurrentDirectory().isDirectory())
+        {
+            path = Paths.get(chooser.getCurrentDirectory().getAbsolutePath());
+            return path;
+        }
+        else if (chooser.getCurrentDirectory().isFile())
+        {
+            path = Paths.get(chooser.getSelectedFile().getPath());
+            return path;
+        }
+        return path;
     }
+
+// -----------------------------------------------------------------------------
 
     public JButton getBtnChooseDirCPR()
     {

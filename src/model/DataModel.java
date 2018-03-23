@@ -9,6 +9,8 @@ import java.util.ArrayList;
  */
 public class DataModel
 {
+
+
     private ArrayList<File> fileListCPR = new ArrayList<>();
     private ArrayList<File> fileListDLL = new ArrayList<>();
 
@@ -21,5 +23,14 @@ public class DataModel
     public ArrayList<File> getFileListDLL()
     {
         return fileListDLL;
+    }
+    public void setFileListCPR(ArrayList<File> fileListCPR)
+    {
+        this.fileListCPR = fileListCPR;
+    }
+
+    public void setFileListDLL(ArrayList<File> fileListDLL)
+    {
+        this.fileListDLL = fileListDLL;
     }
 }
