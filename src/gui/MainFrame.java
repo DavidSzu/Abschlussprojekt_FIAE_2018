@@ -26,8 +26,8 @@ public class MainFrame extends JFrame
     private JPanel panelCubase;
     private JPanel panelPlugIns;
     private JList fileList;
-    private FileFilter filter = new FileNameExtensionFilter("Cubase or PlugIn Files", "cpr", "dll");
     private Path path;
+    private FileFilter filter = new FileNameExtensionFilter("Cubase or PlugIn Files", "cpr", "dll");
     private JFileChooser chooser;
 
 

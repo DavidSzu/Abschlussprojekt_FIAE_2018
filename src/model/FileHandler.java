@@ -1,34 +1,59 @@
 package model;
 
-import gui.MainFrame;
 import main.Main;
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
-import java.nio.file.Path;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
+
+import static org.apache.commons.io.FileUtils.listFiles;
 
 /**
  * Created by DSzustkowski on 27.03.18.
  */
 public class FileHandler
 {
-
-    private MainFrame mf = Main.getMf();
     private DataModel dataModel = Main.getDataModel();
 
+    private File directory1;
     private File directory;
-    private File[] fList;
+    private File[] fList1;
+    Collection<File> fList;
     private ArrayList<File> filesListed;
 
 
 // -----------------------------------------------------------------------------
-    public void listFiles(String directoryName, String extension)
+public void listFiles(String directoryName, String[] extensions)
+{
+
+    directory = new File(directoryName);
+    for (File file : fList = FileUtils.listFiles(directory, extensions, true))
     {
-        directory = new File (directoryName);
-        fList = directory.listFiles(new FileExtensionFilter("Cubase Files ", extension)
+        if (file.isFile())
+        {
+            fList.add(file);
+        }
+
+        if (extensions[0] == "cpr")
+        {
+            dataModel.collectionToArrayList(fList, "cpr");
+        }
+        else
+        {
+            dataModel.collectionToArrayList(fList, "dll");
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+    public void listFiles1(String directoryName, String extension)
+    {
+        directory1 = new File (directoryName);
+        fList1 = directory1.listFiles(new FileExtensionFilter("Cubase Files ", extension)
         {
             @Override
             public boolean accept(File dir, String name)
@@ -42,7 +67,7 @@ public class FileHandler
         });
 
         filesListed = new ArrayList();
-        for (File file : fList)
+        for (File file : fList1)
         {
             if (file.isFile())
             {
@@ -50,7 +75,7 @@ public class FileHandler
             }
             else if (file.isDirectory())
             {
-                listFiles(file.getAbsolutePath(), extension);
+                listFiles1(file.getAbsolutePath(), extension);
             }
         }
 
@@ -65,27 +90,4 @@ public class FileHandler
         System.out.println(dataModel.getFileListCPR() + "dataModel.getFileListCPR");
     }
 
-// -----------------------------------------------------------------------------
-    public void walkCPR(String directoryName)
-    {
-        directory = new File(directoryName);
-        fList = directory.listFiles(new FileExtensionFilter("Cubase Files ", "cpr"));
-
-        if (fList == null) return;
-
-        ArrayList<File> filesListed = dataModel.getFileListCPR();
-        for (File file : fList)
-        {
-            if (file.isDirectory())
-            {
-                walkCPR(file.getAbsolutePath());
-                System.out.println("Dir:" + file.getAbsoluteFile());
-            }
-            else
-            {
-                filesListed.add(file);
-                System.out.println("File:" + file.getAbsoluteFile());
-            }
-        }
-    }
 }

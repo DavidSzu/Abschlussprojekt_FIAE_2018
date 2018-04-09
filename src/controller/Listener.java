@@ -18,27 +18,27 @@ public class Listener implements ActionListener
     private DataModel dataModel = Main.getDataModel();
     private MainFrame mainFrame = Main.getMf();
     private FileHandler fileHandler = new FileHandler();
+    private String[] extensions = new String[2];
+
 
     public void actionPerformed(ActionEvent e)
     {
+        extensions[0] = "cpr";
+        extensions[1] = "dll";
         Object source = e.getSource();
 
-        if (source == mainFrame.getBtnChooseDirCPR())
+        if (source == mainFrame.getBtnChooseDirCPR()|| source == mainFrame.getBtnChooseDirDLL())
         {
-            chooseDirectory("cpr");
+            chooseDirectory(extensions);
         }
 
-        if (source == mainFrame.getBtnChooseDirDLL())
-        {
-            chooseDirectory("dll");
-        }
     }
 
-    private void chooseDirectory(String extension)
+    private void chooseDirectory(String[] extension)
     {
         Path directoryName = mainFrame.chooseDirectory();
         fileHandler.listFiles(directoryName.toString(), extension);
-        if (extension == "cpr")
+        if (extension[0] == "cpr")
         {
             mainFrame.addFileList(dataModel.getFileListCPR());
         }
