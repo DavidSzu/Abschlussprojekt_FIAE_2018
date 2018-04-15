@@ -18,13 +18,11 @@ public class Listener implements ActionListener
     private DataModel dataModel = Main.getDataModel();
     private MainFrame mainFrame = Main.getMf();
     private FileHandler fileHandler = new FileHandler();
-    private String[] extensions = new String[2];
+    private String[] extensions = new String[] {"cpr, dll"};
 
 
     public void actionPerformed(ActionEvent e)
     {
-        extensions[0] = "cpr";
-        extensions[1] = "dll";
         Object source = e.getSource();
 
         if (source == mainFrame.getBtnChooseDirCPR()|| source == mainFrame.getBtnChooseDirDLL())

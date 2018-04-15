@@ -2,15 +2,11 @@ package model;
 
 import main.Main;
 import org.apache.commons.io.FileUtils;
-
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
-import static org.apache.commons.io.FileUtils.listFiles;
 
 /**
  * Created by DSzustkowski on 27.03.18.
@@ -22,7 +18,6 @@ public class FileHandler
     private File directory1;
     private File directory;
     private File[] fList1;
-    Collection<File> fList;
     private ArrayList<File> filesListed;
 
 
@@ -30,21 +25,34 @@ public class FileHandler
 public void listFiles(String directoryName, String[] extensions)
 {
 
+}
+
+    /**
     directory = new File(directoryName);
-    for (File file : fList = FileUtils.listFiles(directory, extensions, true))
+    List<File> files = (List<File>) FileUtils.listFiles(directory, extensions, true);
+
+    for (File file : files)
     {
+        try
+        {
+            System.out.println("file: " + file.getCanonicalPath());
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         if (file.isFile())
         {
-            fList.add(file);
+            files.add(file);
+            System.out.println(file);
         }
 
         if (extensions[0] == "cpr")
         {
-            dataModel.collectionToArrayList(fList, "cpr");
+            dataModel.collectionToArrayList(files, "cpr");
         }
         else
         {
-            dataModel.collectionToArrayList(fList, "dll");
+            dataModel.collectionToArrayList(files, "dll");
         }
     }
 }
@@ -89,5 +97,6 @@ public void listFiles(String directoryName, String[] extensions)
 
         System.out.println(dataModel.getFileListCPR() + "dataModel.getFileListCPR");
     }
+     */
 
 }
