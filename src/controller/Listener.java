@@ -7,6 +7,7 @@ import model.FileHandler;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.nio.file.Path;
 
 /**
@@ -18,7 +19,6 @@ public class Listener implements ActionListener
     private DataModel dataModel = Main.getDataModel();
     private MainFrame mainFrame = Main.getMf();
     private FileHandler fileHandler = new FileHandler();
-    private String[] extensions = new String[] {"cpr, dll"};
 
 
     public void actionPerformed(ActionEvent e)
@@ -27,21 +27,23 @@ public class Listener implements ActionListener
 
         if (source == mainFrame.getBtnChooseDirCPR()|| source == mainFrame.getBtnChooseDirDLL())
         {
-            chooseDirectory(extensions);
+            try
+            {
+                chooseDirectory();
+            }
+            catch (IOException ioe)
+            {
+                ioe.printStackTrace();
+            }
         }
-
     }
 
-    private void chooseDirectory(String[] extension)
+    private void chooseDirectory() throws IOException
     {
         Path directoryName = mainFrame.chooseDirectory();
-        fileHandler.listFiles(directoryName.toString(), extension);
-        if (extension[0] == "cpr")
-        {
-            mainFrame.addFileList(dataModel.getFileListCPR());
-        }
-        else
-            mainFrame.addFileList(dataModel.getFileListDLL());
+        fileHandler.listFiles(directoryName.toString());
+        mainFrame.addFileList(dataModel.getFileListCPR(), "cpr");
+
     }
 
 }

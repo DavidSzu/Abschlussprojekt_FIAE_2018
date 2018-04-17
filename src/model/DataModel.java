@@ -19,23 +19,6 @@ public class DataModel
     private Path path;
 
 // -----------------------------------------------------------------------------
-    public void collectionToArrayList(Collection fileCollection, String extension)
-    {
-        fileCollection = new HashSet<File>();
-        ArrayList<File> fileList = new ArrayList<File>(fileCollection);
-
-        if (extension == "cpr")
-        {
-            this.fileListCPR = fileList;
-        }
-        else
-        {
-            this.fileListDLL = fileList;
-
-        }
-    }
-
-// -----------------------------------------------------------------------------
     public ArrayList<File> getFileListCPR()
     {
         return fileListCPR;

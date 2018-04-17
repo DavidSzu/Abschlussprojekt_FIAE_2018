@@ -71,13 +71,20 @@ public class MainFrame extends JFrame
     }
 
 // -----------------------------------------------------------------------------
-    public void addFileList(ArrayList<File> filesListed)
+    public void addFileList(ArrayList<File> filesListed, String extension)
     {
         fileList = new JList(filesListed.toArray());
         fileList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(fileList);
         scrollPane.setBounds(0, 0, 564, 439);
-        panelCubase.add(scrollPane);
+        if (extension == "cpr")
+        {
+            panelCubase.add(scrollPane);
+        }
+        else if (extension == "dll")
+        {
+            panelPlugIns.add(scrollPane);
+        }
         scrollPane.setViewportView(fileList);
     }
 
