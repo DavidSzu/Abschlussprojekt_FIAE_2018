@@ -6,6 +6,9 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,5 +43,20 @@ public class FileHandler
             else return;
             System.out.println("File: " + filesArray.get(i).getCanonicalPath());
         }
+    }
+
+    private void getFileModTime(Path path)
+    {
+        try
+        {
+            BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
+            System.out.println("Last modified: " + attributes.lastModifiedTime());
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+
     }
 }
