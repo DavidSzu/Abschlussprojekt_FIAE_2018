@@ -57,7 +57,7 @@ public class FileHandler
         System.out.println("Last modified: " + attributes.lastModifiedTime());
 
         FileTime modDate = attributes.lastModifiedTime();
-        DateFormat df = new SimpleDateFormat("dd/mm/yyyy/hh");
+        DateFormat df = new SimpleDateFormat("dd.mm.yyyy hh:mm:ss");
         String dateLastModified = df.format(modDate.toMillis());
 
         return dateLastModified;
