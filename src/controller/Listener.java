@@ -29,7 +29,7 @@ public class Listener implements ActionListener
         {
             try
             {
-                chooseDirectory();
+                handleFileActions();
             }
             catch (IOException ioe)
             {
@@ -38,12 +38,13 @@ public class Listener implements ActionListener
         }
     }
 
-    private void chooseDirectory() throws IOException
+    private void handleFileActions() throws IOException
     {
         Path directoryName = mainFrame.chooseDirectory();
         fileHandler.listFiles(directoryName.toString());
-        mainFrame.addFileList(dataModel.getFileListCPR(), "cpr");
-
+        fileHandler.addModifiedTimeToList(dataModel.getFileListCPR(), "cpr");
+        mainFrame.addLists(dataModel.getFileListCPR(), dataModel.getModTimeListCPR(), "cpr");
+        mainFrame.addLists(dataModel.getFileListDLL(), dataModel.getModTimeListDLL(), "dll");
     }
 
 }

@@ -16,6 +16,9 @@ public class DataModel
 {
     private ArrayList<File> fileListCPR = new ArrayList<>();
     private ArrayList<File> fileListDLL = new ArrayList<>();
+    private ArrayList<String>   modTimeListCPR = new ArrayList<>();
+    private ArrayList<String>   modTimeListDLL= new ArrayList<>();
+
     private Path path;
 
 // -----------------------------------------------------------------------------
@@ -47,6 +50,26 @@ public class DataModel
     public void setPath(Path path)
     {
         this.path = path;
+    }
+
+    public ArrayList<String> getModTimeListCPR()
+    {
+        return modTimeListCPR;
+    }
+
+    public void setModTimeListCPR(ArrayList<String> modTimeListCPR)
+    {
+        this.modTimeListCPR = modTimeListCPR;
+    }
+
+    public ArrayList<String> getModTimeListDLL()
+    {
+        return modTimeListDLL;
+    }
+
+    public void setModTimeListDLL(ArrayList<String> modTimeListDLL)
+    {
+        this.modTimeListDLL = modTimeListDLL;
     }
 
 }

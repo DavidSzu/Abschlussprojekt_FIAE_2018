@@ -8,7 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,18 +49,34 @@ public class FileHandler
         }
     }
 
-    private void getFileModTime(Path path)
+// -----------------------------------------------------------------------------
+    private String getFileModTime(File file) throws IOException
     {
-        try
-        {
-            BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
-            System.out.println("Last modified: " + attributes.lastModifiedTime());
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        Path path = Paths.get(file.getAbsolutePath());
+        BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
+        System.out.println("Last modified: " + attributes.lastModifiedTime());
 
+        FileTime modDate = attributes.lastModifiedTime();
+        DateFormat df = new SimpleDateFormat("dd/mm/yyyy/hh");
+        String dateLastModified = df.format(modDate.toMillis());
 
+        return dateLastModified;
+    }
+
+// -----------------------------------------------------------------------------
+    public void addModifiedTimeToList(ArrayList fileList, String ext) throws IOException
+    {
+        for (int i = 0; i < fileList.size(); i++ )
+        {
+            String fileModTime = getFileModTime((File) fileList.get(i));
+            if (ext.equals("cpr"))
+            {
+                dataModel.getModTimeListCPR().add(fileModTime);
+            }
+            else if (ext.equals("dll"))
+            {
+                dataModel.getModTimeListDLL().add(fileModTime);
+            }
+        }
     }
 }
