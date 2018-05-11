@@ -42,7 +42,7 @@ public class Listener implements ActionListener
     {
         Path directoryName = mainFrame.chooseDirectory();
         fileHandler.listFiles(directoryName.toString());
-        fileHandler.addModifiedTimeToList(dataModel.getFileListCPR(), "cpr");
+        fileHandler.addModifiedTimeToList(dataModel.getFileListCPR());
         mainFrame.addLists(dataModel.getFileListCPR(), dataModel.getModTimeListCPR(), "cpr");
     }
 

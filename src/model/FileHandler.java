@@ -16,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Created by DSzustkowski on 27.03.18.
  */
@@ -38,11 +37,11 @@ public class FileHandler
             String ext = FilenameUtils.getExtension(filesArray.get(i).toString());
             if (ext.equals("cpr") )
             {
-                dataModel.getFileListCPR().add(filesArray.get(i));
+                dataModel.addCPRFileToList(filesArray.get(i));
             }
             else if (ext.equals("dll"))
             {
-                dataModel.getFileListDLL().add(filesArray.get(i));
+                dataModel.addDLLFileToList(filesArray.get(i));
             }
             else return;
             System.out.println("File: " + filesArray.get(i).getCanonicalPath());
@@ -57,19 +56,19 @@ public class FileHandler
         System.out.println("Last modified: " + attributes.lastModifiedTime());
 
         FileTime modDate = attributes.lastModifiedTime();
-        DateFormat df = new SimpleDateFormat("dd.mm.yyyy hh:mm:ss");
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         String dateLastModified = df.format(modDate.toMillis());
 
         return dateLastModified;
     }
 
 // -----------------------------------------------------------------------------
-    public void addModifiedTimeToList(ArrayList fileList, String ext) throws IOException
+    public void addModifiedTimeToList(ArrayList<File> fileList) throws IOException
     {
         for (int i = 0; i < fileList.size(); i++ )
         {
-            String fileModTime = getFileModTime((File) fileList.get(i));
-            dataModel.getModTimeListCPR().add(fileModTime);
+            String fileModTime = getFileModTime(fileList.get(i));
+            dataModel.addToModTimeList(fileModTime);
         }
     }
 }

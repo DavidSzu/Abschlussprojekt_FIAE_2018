@@ -3,8 +3,6 @@ package main;
 import model.DataModel;
 import gui.MainFrame;
 
-import java.io.IOException;
-
 /**
  * Created by DSzustkowski on 27.03.18.
  */

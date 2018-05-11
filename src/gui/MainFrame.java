@@ -57,12 +57,10 @@ public class MainFrame extends JFrame
 
         panelPathCPR = new JPanel();
         panelPathCPR.setBounds(0,20,479,452);
-        //panelPathCPR.setBackground(Color.GREEN);
         panelCubase.add(panelPathCPR);
 
         panelModtimeCPR = new JPanel();
         panelModtimeCPR.setBounds(480, 20, 479, 452);
-        //panelModtimeCPR.setBackground(Color.RED);
         panelCubase.add(panelModtimeCPR);
 
         tfPathCPR = new TextField("Path");
@@ -81,7 +79,6 @@ public class MainFrame extends JFrame
 
         panelPathDLL = new JPanel();
         panelPathDLL.setBounds(0,20,962,452);
-        //panelPathDLL.setBackground(Color.RED);
         panelPlugIns.add(panelPathDLL);
 
         tfPathDLL = new TextField("Path");
@@ -194,10 +191,6 @@ public class MainFrame extends JFrame
         return panelModtimeCPR;
     }
 
-    public JPanel getPanelModtimeDLL()
-    {
-        return panelModtimeDLL;
-    }
 }
 
 
