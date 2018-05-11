@@ -44,7 +44,6 @@ public class Listener implements ActionListener
         fileHandler.listFiles(directoryName.toString());
         fileHandler.addModifiedTimeToList(dataModel.getFileListCPR(), "cpr");
         mainFrame.addLists(dataModel.getFileListCPR(), dataModel.getModTimeListCPR(), "cpr");
-        mainFrame.addLists(dataModel.getFileListDLL(), dataModel.getModTimeListDLL(), "dll");
     }
 
 }

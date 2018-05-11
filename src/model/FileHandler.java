@@ -69,14 +69,7 @@ public class FileHandler
         for (int i = 0; i < fileList.size(); i++ )
         {
             String fileModTime = getFileModTime((File) fileList.get(i));
-            if (ext.equals("cpr"))
-            {
-                dataModel.getModTimeListCPR().add(fileModTime);
-            }
-            else if (ext.equals("dll"))
-            {
-                dataModel.getModTimeListDLL().add(fileModTime);
-            }
+            dataModel.getModTimeListCPR().add(fileModTime);
         }
     }
 }

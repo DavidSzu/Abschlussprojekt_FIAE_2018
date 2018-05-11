@@ -27,11 +27,9 @@ public class MainFrame extends JFrame
     private JPanel panelPathCPR;
     private JPanel panelPathDLL;
     private JPanel panelModtimeCPR;
-    private JPanel panelModtimeDLL;
     private TextField tfPathCPR;
     private TextField tfPathDLL;
     private TextField tfModtimeCPR;
-    private TextField tfModtimeDLL;
     private JList fileList;
     private Path path;
     private FileFilter filter = new FileNameExtensionFilter("Cubase or PlugIn Files", "cpr", "dll");
@@ -58,22 +56,22 @@ public class MainFrame extends JFrame
         panelCubase.setLayout(null);
 
         panelPathCPR = new JPanel();
-        panelPathCPR.setBounds(0,20,482,452);
+        panelPathCPR.setBounds(0,20,479,452);
         //panelPathCPR.setBackground(Color.GREEN);
         panelCubase.add(panelPathCPR);
 
         panelModtimeCPR = new JPanel();
-        panelModtimeCPR.setBounds(483, 20, 482, 452);
+        panelModtimeCPR.setBounds(480, 20, 479, 452);
         //panelModtimeCPR.setBackground(Color.RED);
         panelCubase.add(panelModtimeCPR);
 
         tfPathCPR = new TextField("Path");
-        tfPathCPR.setBounds(0,0,482, 20);
+        tfPathCPR.setBounds(0,0,479, 20);
         tfPathCPR.setEditable(false);
         panelCubase.add(tfPathCPR);
 
         tfModtimeCPR = new TextField("Last modified");
-        tfModtimeCPR.setBounds(483,0,482, 20);
+        tfModtimeCPR.setBounds(480,0,479, 20);
         tfModtimeCPR.setEditable(false);
         panelCubase.add(tfModtimeCPR);
 
@@ -82,34 +80,24 @@ public class MainFrame extends JFrame
         panelPlugIns.setLayout(null);
 
         panelPathDLL = new JPanel();
-        panelPathDLL.setBounds(0,20,482,452);
+        panelPathDLL.setBounds(0,20,962,452);
         //panelPathDLL.setBackground(Color.RED);
         panelPlugIns.add(panelPathDLL);
 
-        panelModtimeDLL = new JPanel();
-        panelModtimeDLL.setBounds(483, 20, 482, 452);
-        //panelModtimeDLL.setBackground(Color.GREEN);
-        panelPlugIns.add(panelModtimeDLL);
-
         tfPathDLL = new TextField("Path");
-        tfPathDLL.setBounds(0,0,482, 20);
+        tfPathDLL.setBounds(0,0,959, 20);
         tfPathDLL.setEditable(false);
         panelPlugIns.add(tfPathDLL);
-
-        tfModtimeDLL = new TextField("Last modified");
-        tfModtimeDLL.setBounds(483,0,482, 20);
-        tfModtimeDLL.setEditable(false);
-        panelPlugIns.add(tfModtimeDLL);
 
         Listener listener = new Listener();
 
         btnChooseDirCPR = new JButton("Choose Directory");
-        btnChooseDirCPR.setBounds(0, 472, 949, 23);
+        btnChooseDirCPR.setBounds(0, 472, 959, 23);
         btnChooseDirCPR.addActionListener(listener);
         panelCubase.add(btnChooseDirCPR);
 
         btnChooseDirDLL = new JButton("Choose Directory");
-        btnChooseDirDLL.setBounds(0, 472, 949, 23);
+        btnChooseDirDLL.setBounds(0, 472, 959, 23);
         btnChooseDirDLL.addActionListener(listener);
         panelPlugIns.add(btnChooseDirDLL);
 
@@ -141,14 +129,10 @@ public class MainFrame extends JFrame
         fileList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(fileList);
         scrollPane.setBounds(0, 0, 482, 452); //482,452
-        if (extension == "cpr")
-        {
-            getPanelModtimeCPR().add(scrollPane);
-        }
-        else if (extension == "dll")
-        {
-            getPanelModtimeDLL().add(scrollPane);
-        }
+
+        getPanelModtimeCPR().add(scrollPane);
+
+
         scrollPane.setViewportView(fileList);
     }
 
