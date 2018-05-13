@@ -40,4 +40,8 @@ public class DataModel
     {
         return modTimeListCPR;
     }
+    public ArrayList<File> getFileListDLL()
+    {
+        return fileListDLL;
+    }
 }

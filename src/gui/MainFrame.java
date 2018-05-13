@@ -120,7 +120,7 @@ public class MainFrame extends JFrame
     }
 
 // -----------------------------------------------------------------------------
-    private void addModTimeList(ArrayList<String> modTimeList, String extension)
+    private void addModTimeList(ArrayList<String> modTimeList)
     {
         fileList = new JList(modTimeList.toArray());
         fileList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -137,7 +137,7 @@ public class MainFrame extends JFrame
     public void addLists(ArrayList<File> fileList, ArrayList<String> modTimeList, String extension)
     {
         addFileList(fileList, extension);
-        addModTimeList(modTimeList, extension);
+        addModTimeList(modTimeList);
     }
 
 // -----------------------------------------------------------------------------
